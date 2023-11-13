@@ -17,7 +17,7 @@ func (c *LogisticPackageCommander) Get(inputMessage *tgbotapi.Message) {
 
 	mypackage, err := c.packageService.Get(idx)
 	if err != nil {
-		log.Printf("fail to get product with idx %d: %v", idx, err)
+		log.Printf("fail to get package with idx %d: %v", idx, err)
 		return
 	}
 

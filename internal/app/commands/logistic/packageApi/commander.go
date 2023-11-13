@@ -12,8 +12,8 @@ type PackageCommander interface {
 	Help(inputMsg *tgbotapi.Message)
 	Get(inputMsg *tgbotapi.Message)
 	List(inputMsg *tgbotapi.Message)
+	New(inputMsg *tgbotapi.Message)
 	//Delete(inputMsg *tgbotapi.Message)
-	//New(inputMsg *tgbotapi.Message)
 	//Edit(inputMsg *tgbotapi.Message)
 }
 
@@ -50,6 +50,8 @@ func (c *LogisticPackageCommander) HandleCommand(msg *tgbotapi.Message, commandP
 		c.List(msg)
 	case "get":
 		c.Get(msg)
+	case "new":
+		c.New(msg)
 	default:
 		c.Default(msg)
 	}

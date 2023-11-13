@@ -8,8 +8,9 @@ import (
 func (c *LogisticPackageCommander) Help(inputMessage *tgbotapi.Message) {
 	msg := tgbotapi.NewMessage(inputMessage.Chat.ID,
 		"/help - help\n"+
-			"/list - list packages\n"+
-			"/get - get package",
+			"/list - get a list of packages\n"+
+			"/get - get a package\n"+
+			"/new - create a new package",
 	)
 
 	_, err := c.bot.Send(msg)

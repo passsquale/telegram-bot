@@ -11,7 +11,8 @@ func (c *LogisticPackageCommander) Help(inputMessage *tgbotapi.Message) {
 			"/list - get a list of packages\n"+
 			"/get - get a package\n"+
 			"/new - create a new package\n"+
-			"/delete - delete a package",
+			"/delete - delete a package\n"+
+			"/edit - edit a package",
 	)
 
 	_, err := c.bot.Send(msg)

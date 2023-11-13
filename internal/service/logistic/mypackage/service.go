@@ -6,6 +6,10 @@ import (
 
 type PackageService interface {
 	List() []Package
+	Get(idx int) (*Package, error)
+	Create(title string) (*Package, error)
+	Delete(idx int) (bool, error)
+	Update(idx int, newTitle string) error
 }
 
 type DummyPackageService struct {
@@ -38,4 +42,14 @@ func (s *DummyPackageService) Delete(idx int) (bool, error) {
 	}
 	allPackages = append(allPackages[:idx], allPackages[idx+1:]...)
 	return true, nil
+}
+func (s *DummyPackageService) Update(idx int, newTitle string) error {
+	if newTitle == "" || len(newTitle) > 20 {
+		return errors.New("invalid title")
+	}
+	if idx < 0 || idx >= len(allPackages) {
+		return errors.New("invalid index")
+	}
+	allPackages[idx].Title = newTitle
+	return nil
 }

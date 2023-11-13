@@ -8,7 +8,7 @@ import (
 )
 
 func (c *LogisticPackageCommander) List(inputMessage *tgbotapi.Message) {
-	outputMsgText := "Here all the products: \n\n"
+	outputMsgText := "Here all the packages: \n\n"
 
 	packages := c.packageService.List()
 	for _, p := range packages {

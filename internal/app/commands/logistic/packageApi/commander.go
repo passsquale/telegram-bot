@@ -13,13 +13,13 @@ type PackageCommander interface {
 	Get(inputMsg *tgbotapi.Message)
 	List(inputMsg *tgbotapi.Message)
 	New(inputMsg *tgbotapi.Message)
-	//Delete(inputMsg *tgbotapi.Message)
+	Delete(inputMsg *tgbotapi.Message)
 	//Edit(inputMsg *tgbotapi.Message)
 }
 
 type LogisticPackageCommander struct {
 	bot            *tgbotapi.BotAPI
-	packageService *mypackage.PackageService
+	packageService *mypackage.DummyPackageService
 }
 
 func NewLogisticPackageCommander(
@@ -52,6 +52,8 @@ func (c *LogisticPackageCommander) HandleCommand(msg *tgbotapi.Message, commandP
 		c.Get(msg)
 	case "new":
 		c.New(msg)
+	case "delete":
+		c.Delete(msg)
 	default:
 		c.Default(msg)
 	}

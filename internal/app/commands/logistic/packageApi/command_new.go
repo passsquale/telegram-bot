@@ -7,14 +7,14 @@ import (
 
 func (c *LogisticPackageCommander) New(inputMessage *tgbotapi.Message) {
 	title := inputMessage.CommandArguments()
-
-	mypackage, err := c.packageService.New(title)
+	mypackage, err := c.packageService.Create(title)
 	if err != nil {
 		log.Printf("fail to add package with idx %d: %v", title, err)
+		return
 	}
 	msg := tgbotapi.NewMessage(
 		inputMessage.Chat.ID,
-		"New package: "+mypackage.Title,
+		"Create package: "+mypackage.Title,
 	)
 	_, err = c.bot.Send(msg)
 	if err != nil {

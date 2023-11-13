@@ -1,6 +1,8 @@
 package mypackage
 
-var allPackage = []Package{
+import "fmt"
+
+var allPackages = []Package{
 	{Title: "zero"},
 	{Title: "one"},
 	{Title: "two"},
@@ -11,4 +13,8 @@ var allPackage = []Package{
 
 type Package struct {
 	Title string
+}
+
+func (p *Package) String() string {
+	return fmt.Sprintf("{%s}", p.Title)
 }

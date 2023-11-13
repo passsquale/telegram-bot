@@ -4,27 +4,38 @@ import (
 	"errors"
 )
 
-type PackageService struct {
+type PackageService interface {
+	List() []Package
 }
 
-func NewService() *PackageService {
-	return &PackageService{}
-}
-func (s *PackageService) List() []Package {
-	return allPackage
+type DummyPackageService struct {
 }
 
-func (s *PackageService) Get(idx int) (*Package, error) {
-	if idx < 0 || idx >= len(allPackage) {
+func NewService() *DummyPackageService {
+	return &DummyPackageService{}
+}
+func (s *DummyPackageService) List() []Package {
+	return allPackages
+}
+
+func (s *DummyPackageService) Get(idx int) (*Package, error) {
+	if idx < 0 || idx >= len(allPackages) {
 		return nil, errors.New("invalid index")
 	}
-	return &allPackage[idx], nil
+	return &allPackages[idx], nil
 }
-func (s *PackageService) New(title string) (*Package, error) {
+func (s *DummyPackageService) Create(title string) (*Package, error) {
 	if title == "" || len(title) > 20 {
 		return nil, errors.New("invalid title")
 	}
-	newPackage := Package{Title: title}
-	allPackage = append(allPackage, newPackage)
+	newPackage := Package{title}
+	allPackages = append(allPackages, newPackage)
 	return &newPackage, nil
+}
+func (s *DummyPackageService) Delete(idx int) (bool, error) {
+	if idx < 0 || idx >= len(allPackages) {
+		return false, errors.New("invalid index")
+	}
+	allPackages = append(allPackages[:idx], allPackages[idx+1:]...)
+	return true, nil
 }

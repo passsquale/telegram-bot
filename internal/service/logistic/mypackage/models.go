@@ -1,6 +1,7 @@
-package product
+package mypackage
 
-var allProducts = []Product{
+var allPackage = []Package{
+	{Title: "zero"},
 	{Title: "one"},
 	{Title: "two"},
 	{Title: "three"},
@@ -8,6 +9,6 @@ var allProducts = []Product{
 	{Title: "five"},
 }
 
-type Product struct {
+type Package struct {
 	Title string
 }

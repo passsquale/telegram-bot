@@ -2,8 +2,7 @@ package main
 
 import (
 	"github.com/joho/godotenv"
-	"github.com/passsquale/telegram-bot/internal/app/commands"
-	"github.com/passsquale/telegram-bot/internal/service/product"
+	"github.com/passsquale/telegram-bot/internal/app/router"
 	"log"
 	"os"
 
@@ -11,15 +10,19 @@ import (
 )
 
 func main() {
-	godotenv.Load()
+	_ = godotenv.Load()
 
-	token := os.Getenv("TOKEN")
+	token, found := os.LookupEnv("TOKEN")
+	if !found {
+		log.Panic("environment variable TOKEN not found in .env")
+	}
+
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	bot.Debug = true
+	//bot.Debug = true
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
@@ -29,10 +32,9 @@ func main() {
 
 	updates := bot.GetUpdatesChan(u)
 
-	productService := product.NewService()
+	routerHandler := router.NewRouter(bot)
 
-	commander := commands.NewCommander(bot, productService)
 	for update := range updates {
-		commander.HandleUpdate(update)
+		routerHandler.HandleUpdate(update)
 	}
 }

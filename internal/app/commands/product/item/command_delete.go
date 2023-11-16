@@ -1,4 +1,4 @@
-package packageApi
+package item
 
 import (
 	"fmt"
@@ -7,17 +7,17 @@ import (
 	"strconv"
 )
 
-func (c *LogisticPackageCommander) Delete(inputMessage *tgbotapi.Message) {
+func (c *ProductItemCommander) Delete(inputMessage *tgbotapi.Message) {
 	args := inputMessage.CommandArguments()
 
-	idx, err := strconv.Atoi(args)
+	idx, err := strconv.ParseInt(args, 0, 64)
 	if err != nil {
 		log.Println("wrong args", args)
 		return
 	}
-	deleted, err := c.packageService.Delete(idx)
+	deleted, err := c.itemService.Remove(uint64(idx))
 	if err != nil {
-		log.Printf("fail to remove package with idx %d: %v", idx, err)
+		log.Printf("fail to remove item with idx %d: %v", idx, err)
 		return
 	}
 	msg := tgbotapi.NewMessage(
@@ -26,6 +26,6 @@ func (c *LogisticPackageCommander) Delete(inputMessage *tgbotapi.Message) {
 	)
 	_, err = c.bot.Send(msg)
 	if err != nil {
-		log.Printf("LogisticPackageCommander.Get: error sending reply message to chat - %v", err)
+		log.Printf("ProductItemCommander.Describe: error sending reply message to chat - %v", err)
 	}
 }

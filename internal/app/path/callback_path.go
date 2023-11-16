@@ -16,7 +16,7 @@ type CallbackPath struct {
 var ErrUnknownCallback = errors.New("unknown callback")
 
 func ParseCallback(callbackData string) (CallbackPath, error) {
-	callbackParts := strings.SplitN(callbackData, "__", 4)
+	callbackParts := strings.SplitN(callbackData, "_", 4)
 	if len(callbackParts) != 4 {
 		return CallbackPath{}, ErrUnknownCallback
 	}
@@ -30,5 +30,5 @@ func ParseCallback(callbackData string) (CallbackPath, error) {
 }
 
 func (p CallbackPath) String() string {
-	return fmt.Sprintf("%s__%s__%s__%s", p.Domain, p.Subdomain, p.CallbackName, p.CallbackData)
+	return fmt.Sprintf("%s__%s__%s", p.Subdomain, p.CallbackName, p.CallbackData)
 }

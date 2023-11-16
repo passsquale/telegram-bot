@@ -1,4 +1,4 @@
-package packageApi
+package item
 
 import (
 	"encoding/json"
@@ -12,11 +12,11 @@ type CallbackListData struct {
 	Offset int `json:"offset"`
 }
 
-func (c *LogisticPackageCommander) CallbackList(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
+func (c *ProductItemCommander) CallbackList(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
 	parsedData := CallbackListData{}
 	err := json.Unmarshal([]byte(callbackPath.CallbackData), &parsedData)
 	if err != nil {
-		log.Printf("LogisticPackagCommander.CallbackList: "+
+		log.Printf("ProductItemCommander.CallbackList: "+
 			"error reading json data for type CallbackListData from "+
 			"input string %v - %v", callbackPath.CallbackData, err)
 		return
@@ -27,6 +27,6 @@ func (c *LogisticPackageCommander) CallbackList(callback *tgbotapi.CallbackQuery
 	)
 	_, err = c.bot.Send(msg)
 	if err != nil {
-		log.Printf("LogisticPackageCommander.CallbackList: error sending reply message to chat - %v", err)
+		log.Printf("ProductItemCommander.CallbackList: error sending reply message to chat - %v", err)
 	}
 }

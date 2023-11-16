@@ -1,4 +1,4 @@
-package packageApi
+package item
 
 import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func (c *LogisticPackageCommander) Edit(inputMessage *tgbotapi.Message) {
+func (c *ProductItemCommander) Edit(inputMessage *tgbotapi.Message) {
 	args := inputMessage.CommandArguments()
 	commandParts := strings.SplitN(args, " ", 2)
 	if len(commandParts) != 2 {
@@ -20,7 +20,7 @@ func (c *LogisticPackageCommander) Edit(inputMessage *tgbotapi.Message) {
 		return
 	}
 	title := commandParts[1]
-	err = c.packageService.Update(idx, title)
+	err = c.itemService.Update(idx, title)
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -28,6 +28,6 @@ func (c *LogisticPackageCommander) Edit(inputMessage *tgbotapi.Message) {
 	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Success")
 	_, err = c.bot.Send(msg)
 	if err != nil {
-		log.Printf("LogisticPackageCommander.Get: error sending reply message to chat - %v", err)
+		log.Printf("ProductItemCommander.Describe: error sending reply message to chat - %v", err)
 	}
 }

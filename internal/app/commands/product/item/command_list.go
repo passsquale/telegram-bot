@@ -1,4 +1,4 @@
-package packageApi
+package item
 
 import (
 	"encoding/json"
@@ -7,12 +7,16 @@ import (
 	"log"
 )
 
-func (c *LogisticPackageCommander) List(inputMessage *tgbotapi.Message) {
-	outputMsgText := "Here all the packages: \n\n"
+func (c *ProductItemCommander) List(inputMessage *tgbotapi.Message) {
+	outputMsgText := "Here all the items: \n\n"
 
-	packages := c.packageService.List()
-	for _, p := range packages {
-		outputMsgText += p.Title
+	items, err := c.itemService.List()
+	if err != nil {
+		log.Println("cannot get a list of items")
+		return
+	}
+	for _, p := range items {
+		outputMsgText += p.String()
 		outputMsgText += "\n"
 	}
 
@@ -23,8 +27,7 @@ func (c *LogisticPackageCommander) List(inputMessage *tgbotapi.Message) {
 	})
 
 	callbackPath := path.CallbackPath{
-		Domain:       "demo",
-		Subdomain:    "subdomain",
+		Subdomain:    "item",
 		CallbackName: "list",
 		CallbackData: string(serializedData),
 	}
@@ -35,8 +38,8 @@ func (c *LogisticPackageCommander) List(inputMessage *tgbotapi.Message) {
 		),
 	)
 
-	_, err := c.bot.Send(msg)
+	_, err = c.bot.Send(msg)
 	if err != nil {
-		log.Printf("LogisticPackageCommander.List: error sending reply message to chat - %v", err)
+		log.Printf("ProductItemCommander.List: error sending reply message to chat - %v", err)
 	}
 }

@@ -15,7 +15,7 @@ type CommandPath struct {
 var ErrUnknownCommand = errors.New("unknown command")
 
 func ParseCommand(commandText string) (CommandPath, error) {
-	commandParts := strings.SplitN(commandText, "__", 3)
+	commandParts := strings.SplitN(commandText, "_", 3)
 	if len(commandParts) != 3 {
 		return CommandPath{}, ErrUnknownCommand
 	}
@@ -33,5 +33,5 @@ func (c CommandPath) WithCommandName(commandName string) CommandPath {
 }
 
 func (c CommandPath) String() string {
-	return fmt.Sprintf("/%s__%s__%s", c.CommandName, c.Domain, c.Subdomain)
+	return fmt.Sprintf("/%s_%s", c.CommandName, c.Subdomain)
 }

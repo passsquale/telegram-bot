@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/passsquale/telegram-bot/internal/app/commands/logistic"
+	"github.com/passsquale/telegram-bot/internal/app/commands/product"
 	"github.com/passsquale/telegram-bot/internal/app/path"
 	"log"
 	"runtime/debug"
@@ -25,7 +25,7 @@ func NewRouter(
 ) *Router {
 	return &Router{
 		bot:               bot,
-		logisticCommander: logistic.NewLogisticCommander(bot),
+		logisticCommander: product.NewProductCommander(bot),
 	}
 }
 
@@ -51,8 +51,8 @@ func (c *Router) handleCallback(callback *tgbotapi.CallbackQuery) {
 		return
 	}
 
-	switch callbackPath.Domain {
-	case "logistic":
+	switch callbackPath.Subdomain {
+	case "product":
 		c.logisticCommander.HandleCallback(callback, callbackPath)
 	default:
 		log.Printf("Router.handleCallback: unknown domain - %s", callbackPath.Domain)
@@ -62,7 +62,6 @@ func (c *Router) handleCallback(callback *tgbotapi.CallbackQuery) {
 func (c *Router) handleMessage(msg *tgbotapi.Message) {
 	if !msg.IsCommand() {
 		c.showCommandFormat(msg)
-
 		return
 	}
 
@@ -73,7 +72,7 @@ func (c *Router) handleMessage(msg *tgbotapi.Message) {
 	}
 
 	switch commandPath.Domain {
-	case "logistic":
+	case "product":
 		c.logisticCommander.HandleCommand(msg, commandPath)
 	default:
 		log.Printf("Router.handleCallback: unknown domain - %s", commandPath.Domain)
@@ -81,7 +80,7 @@ func (c *Router) handleMessage(msg *tgbotapi.Message) {
 }
 
 func (c *Router) showCommandFormat(inputMessage *tgbotapi.Message) {
-	outputMsg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Command format: /{command}__{domain}__{subdomain}")
+	outputMsg := tgbotapi.NewMessage(inputMessage.Chat.ID, "Command format: /{command}_product_item")
 
 	_, err := c.bot.Send(outputMsg)
 	if err != nil {

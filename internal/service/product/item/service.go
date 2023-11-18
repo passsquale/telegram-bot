@@ -56,6 +56,7 @@ func (s *DummyItemService) Update(itemID uint64, item Item) error {
 	if itemID < 0 || itemID >= uint64(len(allItems)) {
 		return errors.New("invalid itemID")
 	}
+	item.Id = itemID
 	allItems[itemID] = item
 	return nil
 }

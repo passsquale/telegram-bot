@@ -9,8 +9,8 @@ import (
 
 func (c *ProductItemCommander) Edit(inputMessage *tgbotapi.Message) {
 	args := inputMessage.CommandArguments()
-	commandParts := strings.SplitN(args, " ", 2)
-	if len(commandParts) != 2 {
+	commandParts := strings.SplitN(args, " ", 4)
+	if len(commandParts) != 4 {
 		log.Println("wrong args", args)
 		return
 	}
@@ -19,8 +19,12 @@ func (c *ProductItemCommander) Edit(inputMessage *tgbotapi.Message) {
 		log.Printf("fail to edit package with idx %d: %v", idx, err)
 		return
 	}
-	title := commandParts[1]
-	err = c.itemService.Update(idx, title)
+	item, err := c.parseItem(commandParts[1:])
+	if err != nil {
+		log.Printf("fail to parse string %v: %v", args, err)
+		return
+	}
+	err = c.itemService.Update(uint64(idx), *item)
 	if err != nil {
 		log.Println(err.Error())
 	}

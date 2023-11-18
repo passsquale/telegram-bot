@@ -10,11 +10,11 @@ func (c *ProductItemCommander) parseItem(commandParts []string) (*item.Item, err
 	if len(commandParts) != 3 {
 		return nil, errors.New("wrong arguments")
 	}
-	ownerId, err := strconv.ParseInt(commandParts[0], 0, 64)
+	ownerId, err := strconv.ParseInt(commandParts[0], 10, 64)
 	if err != nil {
 		return nil, err
 	}
-	productId, err := strconv.ParseInt(commandParts[1], 0, 64)
+	productId, err := strconv.ParseInt(commandParts[1], 10, 64)
 	if err != nil {
 		return nil, err
 	}

@@ -10,7 +10,7 @@ import (
 func (c *ProductItemCommander) List(inputMessage *tgbotapi.Message) {
 	outputMsgText := "Here all the items: \n\n"
 
-	items, err := c.itemService.List()
+	items, err := c.itemService.List(0, 100)
 	if err != nil {
 		log.Println("cannot get a list of items")
 		return

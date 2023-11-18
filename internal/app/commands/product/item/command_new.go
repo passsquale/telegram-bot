@@ -23,7 +23,7 @@ func (c *ProductItemCommander) New(inputMessage *tgbotapi.Message) {
 	}
 	msg := tgbotapi.NewMessage(
 		inputMessage.Chat.ID,
-		"Created item! id: "+strconv.FormatInt(int64(id), 0),
+		"Created item! id: "+strconv.FormatInt(int64(id), 10),
 	)
 	_, err = c.bot.Send(msg)
 	if err != nil {

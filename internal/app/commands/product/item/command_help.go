@@ -7,12 +7,12 @@ import (
 
 func (c *ProductItemCommander) Help(inputMessage *tgbotapi.Message) {
 	msg := tgbotapi.NewMessage(inputMessage.Chat.ID,
-		"/help - help\n"+
+		"/help_product_item - help\n"+
 			"/list_product_item - get a list of items\n"+
-			"/get_product_item - get a item\n"+
-			"/new_product_item - create a new item\n"+
-			"/delete_product_item - delete a item\n"+
-			"/edit_product_item - edit a item",
+			"/get_product_item {id}- get an item\n"+
+			"/new_product_item {ownerID} {productID} {title}- create a new item\n"+
+			"/delete_product_item {id} - delete an item\n"+
+			"/edit_product_item {id} {ownerID} {productID} {title} - edit an item",
 	)
 
 	_, err := c.bot.Send(msg)

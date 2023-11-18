@@ -10,7 +10,7 @@ import (
 func (c *ProductItemCommander) Delete(inputMessage *tgbotapi.Message) {
 	args := inputMessage.CommandArguments()
 
-	idx, err := strconv.ParseInt(args, 0, 64)
+	idx, err := strconv.ParseInt(args, 10, 64)
 	if err != nil {
 		log.Println("wrong args", args)
 		return

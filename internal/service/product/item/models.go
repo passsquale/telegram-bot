@@ -22,6 +22,3 @@ func (i *Item) String() string {
 	return fmt.Sprintf("Item{id:%v, ownerId:%v, pruductId:%v, title:%v}",
 		i.Id, i.OwnerId, i.ProductId, i.Title)
 }
-func NewItem(id, ownerId, productId uint64, title string) *Item {
-	return &Item{Id: id, OwnerId: ownerId, ProductId: productId, Title: title}
-}
